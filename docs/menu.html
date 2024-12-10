@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            height: 100%;
+            width: 250px;
+            background-color: #333;
+            padding-top: 60px;
+            transition: left 0.3s;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .menu ul li {
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .menu ul li a:hover {
+            background-color: #575757;
+        }
+
+        .menu.active {
+            left: 0;
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .menu-toggle:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li><a href="accueil.html" onclick="loadPage('accueil.html')">Accueil</a></li>
+            <li><a href="catalogue.php" onclick="loadPage('catalogue.php')">Catalogue</a></li>
+            <li><a href="afficher_commande.php" onclick="loadPage('afficher_commande.php')">Achats</a></li>
+            <li><a href="bienvenue.html" onclick="loadPage('bienvenue.html')">Deconnexion</a></li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menu = document.querySelector('.menu');
+            const toggleButton = document.createElement('button');
+            toggleButton.innerText = '☰ Menu';
+            toggleButton.classList.add('menu-toggle');
+            document.body.appendChild(toggleButton);
+
+            // Affichage du menu au clic sur le bouton
+            toggleButton.addEventListener('click', function () {
+                menu.classList.toggle('active');
+            });
+        });
+
+        function loadPage(page) {
+            fetch(page)
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector('.main-content').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading page:', error));
+        }
+    </script>
+</body>
+</html>
